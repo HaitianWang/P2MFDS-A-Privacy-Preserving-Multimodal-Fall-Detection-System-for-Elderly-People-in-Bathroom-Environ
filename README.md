@@ -1,143 +1,138 @@
-# PPMFD-A-Privacy-Preserving-Multimodal-Fall-Detection-Network-for-Elderly-Individuals-in-Bathroom
+# PPMFD: A Privacy-Preserving Multimodal Fall Detection Network for Elderly Individuals in Bathroom
 
-PPMFD (Privacy-Preserving Multimodal Fall Detection) is a novel and practical AI-based system designed to monitor and detect fall events in residential bathroom environments, especially for elderly individuals. It leverages multimodal sensors—millimeter-wave radar and triaxial vibration accelerometers—to deliver real-time, privacy-preserving detection with high accuracy.
-
----
-
-## 📑 Table of Contents
-
+## Table of Contents
 - [1. Introduction](#1-introduction)
-- [2. System Overview](#2-system-overview)
-  - [2.1 Sensor Configuration](#21-sensor-configuration)
-  - [2.2 Deployment Environment](#22-deployment-environment)
-- [3. Scenario Simulation and Dataset](#3-scenario-simulation-and-dataset)
-- [4. Sensor Evaluation Framework](#4-sensor-evaluation-framework)
-  - [4.1 Evaluation Summary](#41-evaluation-summary)
-  - [4.2 Scoring Criteria](#42-scoring-criteria)
+- [2. Motivation and Background](#2-motivation-and-background)
+- [3. Multimodal Sensor Selection](#3-multimodal-sensor-selection)
+- [4. System Setup and Dataset Collection](#4-system-setup-and-dataset-collection)
 - [5. Model Architecture](#5-model-architecture)
   - [5.1 Radar Stream](#51-radar-stream)
   - [5.2 Vibration Stream](#52-vibration-stream)
-  - [5.3 Feature Fusion](#53-feature-fusion)
-- [6. Experimental Results](#6-experimental-results)
-  - [6.1 Metrics per Scenario](#61-metrics-per-scenario)
-  - [6.2 Confusion Matrix](#62-confusion-matrix)
-- [7. Ablation Study](#7-ablation-study)
-- [8. Benchmark Comparison](#8-benchmark-comparison)
-- [9. Citation](#9-citation)
+  - [5.3 Feature Fusion and Classifier](#53-feature-fusion-and-classifier)
+- [6. Experimental Design](#6-experimental-design)
+- [7. Results and Performance](#7-results-and-performance)
+  - [7.1 Scenario-wise Metrics](#71-scenario-wise-metrics)
+  - [7.2 Comparison with State-of-the-Art](#72-comparison-with-state-of-the-art)
+  - [7.3 Ablation Study](#73-ablation-study)
+- [8. Conclusion and Future Work](#8-conclusion-and-future-work)
 
 ---
 
 ## 1. Introduction
 
-Falls in bathrooms are a major health risk for the elderly. Existing methods using cameras or wearable devices raise privacy or usability issues. PPMFD offers a contactless, privacy-first solution using radar and vibration sensors deployed non-invasively.
+Falls are among the leading causes of injury-related deaths in the elderly population. As global aging accelerates, with over 16% of people projected to be aged 65+ by 2050, the demand for reliable, real-time fall detection systems becomes increasingly critical—especially in wet and confined areas like bathrooms, where over 80% of falls occur.
+
+PPMFD (Privacy-Preserving Multimodal Fall Detection) is a robust AI-based fall detection system that integrates mmWave radar and vibration sensors. The network not only delivers high accuracy but also preserves personal privacy by avoiding cameras or wearable sensors, making it ideal for private home environments.
 
 ---
 
-## 2. System Overview
+## 2. Motivation and Background
 
-### 2.1 Sensor Configuration
+Traditional fall detection methods suffer from various limitations. Wearable devices often face poor user compliance and discomfort, especially in wet environments. Camera-based solutions raise significant privacy concerns, particularly in sensitive locations like bathrooms. Audio-based solutions are affected by environmental noise and false positives.
 
-![sensor setting](docs/Figures/Exp_Setting.png）
-
-- **C4001 mmWave Radar** @ 2.2m height for full-body motion tracking.
-- **ADXL345 Vibration Sensor** @ ground level for impact detection.
-- **ESP32-C3 MCU** for wireless communication and data logging.
-
-### 2.2 Deployment Environment
-
-- Location: Realistic bathroom space with ceramic surfaces, shower partition, and common obstacles.
-- Coverage: Entire activity zone including toilet, floor, and shower corner.
+To overcome these challenges, the research focuses on non-intrusive, privacy-aware modalities. However, unimodal systems (e.g., only radar or only vibration) are inherently limited by environmental conditions, leading to system bias and suboptimal performance. This motivated the need for a multimodal fusion system capable of capturing both motion dynamics and impact signals.
 
 ---
 
-## 3. Scenario Simulation and Dataset
+## 3. Multimodal Sensor Selection
 
-<img src="./docs/figures/Exp_behavior.png" width="85%" />
+A comprehensive sensor evaluation framework was developed to select the most suitable combination for fall detection in bathroom settings. Fourteen common modalities—including Wi-Fi, infrared, thermal imaging, and vibration—were assessed based on eight criteria: target relevance, recall, energy efficiency, deployability, privacy, availability, and cost.
 
-Nine scenarios include:
-- (a–c): Environmental triggers (empty, object drops)
-- (d–h): Human movement variations
-- (i): Simulated falls
+The final selection was based on a weighted scoring system. As shown below, mmWave radar and 3D vibration sensors achieved the highest usability scores, demonstrating superior suitability for accurate and privacy-conscious monitoring.
 
-> Total: 3+ hours of synchronized multimodal data.
+![Sensor Scoring Framework](./Scoring%20Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
 
 ---
 
-## 4. Sensor Evaluation Framework
+## 4. System Setup and Dataset Collection
 
-### 4.1 Evaluation Summary
+The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m × 2.2m), equipped with typical fixtures like marble walls, a glass partition, anti-slip tiles, and hygiene items. The mmWave radar was mounted at a height of 2.2 meters, while the ADXL345 vibration sensor was installed near the floor under the shower area.
 
-<img src="./docs/figures/Privacy-Focused Modality Evaluation Summary.png" width="90%" />
+![Setup Diagram](./Exp_Setting.png)
 
-> mmWave + Vibration = highest usability for privacy-preserving fall detection.
+A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point clouds were collected, ensuring high-quality multimodal data.
 
-### 4.2 Scoring Criteria
-
-<img src="./docs/figures/Scoring Framework for Privacy-Preserving Sensor Selection.png" width="60%" />
-
-Weighted evaluation across 8 dimensions (privacy, energy, cost, etc.).
+![Scenario Types](./Exp_behavior.png)
 
 ---
 
 ## 5. Model Architecture
 
+PPMFD is a dual-stream multimodal neural network. It combines:
+- A **CNN-BiLSTM-Attention** pipeline to analyze mmWave radar signals
+- A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
+- A fusion module that integrates both feature representations
+
+![PPMFD Architecture](./PPMFD%20Network.png)
+
 ### 5.1 Radar Stream
 
-- 1D CNN → BiLSTM → Attention
-- Extracts global motion patterns from 3D point clouds
+The mmWave radar signal is transformed into a temporal sequence of point clouds. These are processed via a 1D CNN to extract local motion features, followed by a BiLSTM layer that models long-range dependencies. Attention weights further enhance informative temporal segments.
 
 ### 5.2 Vibration Stream
 
-- Multi-Scale CNN → SEBlock → Self-Attention
-- Captures local impacts and subtle signal shifts
+Vibration data is fed into a Multi-Scale CNN, allowing detection of subtle and high-impact signals. Channel-wise attention (SEBlock) emphasizes dominant signals, and a self-attention mechanism captures temporal dependencies, reducing noise.
 
-### 5.3 Feature Fusion
+### 5.3 Feature Fusion and Classifier
 
-<img src="./docs/figures/PPMFD Network.png" width="100%" />
-
-Concatenated embeddings are passed to a detection head for binary classification.
+The output of the two streams is concatenated and passed through fully connected layers for final binary classification (fall vs. non-fall). This architecture enables the model to learn both macro-motion and micro-impact patterns.
 
 ---
 
-## 6. Experimental Results
+## 6. Experimental Design
 
-### 6.1 Metrics per Scenario
+Eight real-world scenarios were designed to test system robustness:
+1. Empty bathroom
+2. Light object drop
+3. Heavy object drop
+4. Normal walking
+5. Bent posture walk
+6. Assisted walk (wall-supported)
+7. Static standing / squatting
+8. Realistic fall
 
-<img src="./docs/figures/Scenario-Based PPMFD Performance Metrics.png" width="90%" />
-
-> Overall accuracy: **95.0%** | F1: **91.3%**
-
-### 6.2 Confusion Matrix
-
-<img src="./docs/figures/confusion matrix.png" width="85%" />
-
-> High separation between fall and non-fall events, even under similar motion patterns.
-
----
-
-## 7. Ablation Study
-
-<img src="./docs/figures/Ablation Study of Multimodal Model Components.png" width="95%" />
-
-Tested various combinations of model blocks (CNN, LSTM, Attention) with and without vibration modality. Best performance with full configuration.
+Each activity was performed for approximately 20 minutes. Fall scenarios were simulated under expert supervision. The synchronized multimodal dataset offers a valuable benchmark for future research.
 
 ---
 
-## 8. Benchmark Comparison
+## 7. Results and Performance
 
-<img src="./docs/figures/Benchmark Comparison of Fall Detection Methods.png" width="100%" />
+PPMFD achieved superior performance across all evaluation metrics.
 
-Compared against 15 state-of-the-art fall detection models:
-- Best **Precision** (94.6%) and top-tier **Recall** (87.8%) in non-vision methods.
+### 7.1 Scenario-wise Metrics
+
+The model maintained high precision and recall in all scenarios. Especially in hard cases like object drops and squatting, the dual-sensor fusion reduced false positives effectively.
+
+![Confusion Matrix](./confusion%20matrix.png)
+
+![Scenario Metrics](./Scenario-Based%20PPMFD%20Performance%20Metrics.png)
+
+### 7.2 Comparison with State-of-the-Art
+
+PPMFD was benchmarked against 16 leading models. Despite similar or slightly lower recall, it outperformed in precision and overall F1-score—an essential trait for reducing false alarms in real environments.
+
+![Benchmark Comparison](./Benchmark%20Comparison%20of%20Fall%20Detection%20Methods.png)
+
+### 7.3 Ablation Study
+
+To validate the effectiveness of each component, an ablation study was performed. Results demonstrate that removing attention or one sensor modality significantly reduces performance. The complete model achieved an accuracy of 95.0% and F1-score of 91.1%.
+
+![Ablation Study](./Ablation%20Study%20of%20Multimodal%20Model%20Components.png)
 
 ---
 
-## 9. Citation
+## 8. Conclusion and Future Work
 
-```bibtex
-@inproceedings{wang2025ppmfd,
-  title={PPMFD: A Privacy-Preserving Multimodal Fall Detection Network for Elderly Individuals in Bathroom},
-  author={Haitian Wang and Yiren Wang and Yumeng Miao and Yuliang Zhang and Xinyu Wang and Atif Mansoor},
-  booktitle={IEEE Conference on ...},
-  year={2025}
-}
+PPMFD provides a privacy-aware, multimodal approach to real-time fall detection in bathrooms. Its dual-stream architecture captures both large-scale movement and localized impacts, ensuring high accuracy in complex, noisy environments.
+
+In the future, we aim to:
+- Expand testing to real elderly subjects under long-term deployment
+- Develop adaptive thresholding and noise calibration
+- Explore lighter edge versions for real-time in-home integration
+
+The dataset and model will be released to promote open research and reproducibility.
+
+---
+
+> Contact: haitian.wang@uwa.edu.au  
+> Project by: University of Western Australia, Department of Computer Science
