@@ -52,7 +52,7 @@ The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m 
 
 A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point clouds were collected, ensuring high-quality multimodal data.
 
-![Scenario Types](./Exp_behavior.png)
+![Scenario Types](./docs/Figures/Exp_behavior.png)
 
 ---
 
@@ -117,7 +117,7 @@ PPMFD was benchmarked against 16 leading models. Despite similar or slightly low
 
 To validate the effectiveness of each component, an ablation study was performed. Results demonstrate that removing attention or one sensor modality significantly reduces performance. The complete model achieved an accuracy of 95.0% and F1-score of 91.1%.
 
-![Ablation Study](./Ablation%20Study%20of%20Multimodal%20Model%20Components.png)
+![Ablation Study](docs/Figures/Ablation Study of Multimodal Model Components.png)
 
 ---
 
