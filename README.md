@@ -15,6 +15,7 @@
   - [7.2 Comparison with State-of-the-Art](#72-comparison-with-state-of-the-art)
   - [7.3 Ablation Study](#73-ablation-study)
 - [8. Conclusion and Future Work](#8-conclusion-and-future-work)
+- [9. Main Contributors](#9-main-contributors)
 
 ---
 
@@ -131,6 +132,14 @@ In the future, we aim to:
 - Explore lighter edge versions for real-time in-home integration
 
 The dataset and model will be released to promote open research and reproducibility.
+
+## 9. Main Contributors
+
+This work was conducted by a research team from the University of Western Australia (UWA).
+
+### Lead Contributors
+- **Haitian Wang** – Lead researcher and project coordinator. Designed the sensor selection framework and supervised overall system integration.
+- **Yiren Wang** – Developed the multimodal dataset, led the implementation of the CNN-BiLSTM-Attention pipeline, and conducted extensive experimentation and evaluation.
 
 ---
 
