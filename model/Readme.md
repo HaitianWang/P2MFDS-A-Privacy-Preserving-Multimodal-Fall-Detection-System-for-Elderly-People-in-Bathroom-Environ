@@ -5,16 +5,19 @@ This folder contains deep learning models for fall detection using millimeter-wa
 ## Contents
 
 - **Multimodal CNN-LSTM with Attention**: Combines radar and vibration sensor inputs. Each input is processed by independent CNN and LSTM stream followed by attention modules, then fused for final classification.
-- **CNN, LSTM, CNN-LSTM Models**: Applies different deep learning architectures to radar data only for comparative analysis.
+- **CNN, LSTM, CNN-LSTM Models**: Applies different deep learning architectures to radar data only for ablation study.
 
 ## Model Descriptions
 
-### Multimodal CNN-LSTM with Attention
-A dual-stream model that processes radar and vibration signals separately using:
-- CNN for spatial feature extraction
-- LSTM for temporal modeling
-- Attention for weighting relevant time steps
-- Feature fusion and fully connected layers for binary classification
+### Multimodal CNN-LSTM with Attention + SEB
+This model follows a two-stream architecture:
+
+- **Radar stream**: The radar signal passes through two 1D convolutional layers followed by a bidirectional LSTM. An attention mechanism is applied to emphasize important temporal features.
+- **Vibration stream**: The vibration data follows the same structure as the radar stream (CNN → Bi-LSTM → Attention).
+- **SEB (Selective Enhancement Block)**: A custom-designed attention block that adaptively enhances discriminative features across modalities before fusion.
+- **Fusion**: Features from both streams are refined by SEB and then passed through fully connected layers for binary classification (fall vs. no fall).
+
+This architecture allows the model to learn both spatial and temporal patterns from each modality independently and enhance cross-modal interactions via SEB.
 
 ### CNN, LSTM, and CNN-LSTM
 - **CNN**: Captures local patterns across the radar signal sequence
