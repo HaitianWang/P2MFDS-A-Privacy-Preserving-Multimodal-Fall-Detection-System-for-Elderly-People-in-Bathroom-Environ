@@ -40,7 +40,7 @@ A comprehensive sensor evaluation framework was developed to select the most sui
 
 The final selection was based on a weighted scoring system. As shown below, mmWave radar and 3D vibration sensors achieved the highest usability scores, demonstrating superior suitability for accurate and privacy-conscious monitoring.
 
-![Sensor Scoring Framework](./Scoring%20Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
+![Sensor Scoring Framework](./docs/Figures/Scoring Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
 
 ---
 
@@ -48,7 +48,7 @@ The final selection was based on a weighted scoring system. As shown below, mmWa
 
 The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m × 2.2m), equipped with typical fixtures like marble walls, a glass partition, anti-slip tiles, and hygiene items. The mmWave radar was mounted at a height of 2.2 meters, while the ADXL345 vibration sensor was installed near the floor under the shower area.
 
-![Setup Diagram](./Exp_Setting.png)
+![Setup Diagram](./docs/Figures/Exp_Setting.png)
 
 A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point clouds were collected, ensuring high-quality multimodal data.
 
@@ -63,7 +63,7 @@ PPMFD is a dual-stream multimodal neural network. It combines:
 - A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
 - A fusion module that integrates both feature representations
 
-![PPMFD Architecture](./PPMFD%20Network.png)
+![PPMFD Architecture](./docs/Figures/PPMFD%20Network.png)
 
 ### 5.1 Radar Stream
 
@@ -102,22 +102,22 @@ PPMFD achieved superior performance across all evaluation metrics.
 ### 7.1 Scenario-wise Metrics
 
 The model maintained high precision and recall in all scenarios. Especially in hard cases like object drops and squatting, the dual-sensor fusion reduced false positives effectively.
+![Confusion Matrix](./docs/Figures/confusion%20matrix.png)
 
-![Confusion Matrix](./confusion%20matrix.png)
+![Scenario Metrics](./docs/Figures/Scenario-Based%20PPMFD%20Performance%20Metrics.png)
 
-![Scenario Metrics](./Scenario-Based%20PPMFD%20Performance%20Metrics.png)
 
 ### 7.2 Comparison with State-of-the-Art
 
 PPMFD was benchmarked against 16 leading models. Despite similar or slightly lower recall, it outperformed in precision and overall F1-score—an essential trait for reducing false alarms in real environments.
 
-![Benchmark Comparison](./Benchmark%20Comparison%20of%20Fall%20Detection%20Methods.png)
+![Benchmark Comparison](./docs/Figures/Benchmark%20Comparison%20of%20Fall%20Detection%20Methods.png)
 
 ### 7.3 Ablation Study
 
 To validate the effectiveness of each component, an ablation study was performed. Results demonstrate that removing attention or one sensor modality significantly reduces performance. The complete model achieved an accuracy of 95.0% and F1-score of 91.1%.
 
-![Ablation Study](docs/Figures/Ablation Study of Multimodal Model Components.png)
+![Ablation Study](./docs/Figures/Ablation%20Study%20of%20Multimodal%20Model%20Components.png)
 
 ---
 
