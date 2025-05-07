@@ -42,9 +42,11 @@ To overcome these challenges, the research focuses on non-intrusive, privacy-awa
 
 A comprehensive sensor evaluation framework was developed to select the most suitable combination for fall detection in bathroom settings. Fourteen common modalities—including Wi-Fi, infrared, thermal imaging, and vibration—were assessed based on eight criteria: target relevance, recall, energy efficiency, deployability, privacy, availability, and cost.
 
+![Sensor Scoring Framework](./docs/Figures/Scoring%20Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
+
 The final selection was based on a weighted scoring system. As shown below, mmWave radar and 3D vibration sensors achieved the highest usability scores, demonstrating superior suitability for accurate and privacy-conscious monitoring.
 
-![Sensor Scoring Framework](./docs/Figures/Scoring%20Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
+![Privacy-Focused Modality Evaluation Summary](./docs/Figures/Privacy-Focused%20Modality%20Evaluation%20Summary.png)
 
 ---
 
