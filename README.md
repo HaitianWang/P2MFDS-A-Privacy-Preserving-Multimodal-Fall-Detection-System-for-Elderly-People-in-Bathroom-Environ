@@ -55,7 +55,7 @@ A total of 48 volunteers participated in data collection, simulating 8 types of 
 
 ![Scenario Types](./docs/Figures/Exp_behavior.png)
 
-We have collected and constructed a large‐scale, multimodal fall‐detection dataset specifically for elderly users in bathroom environments. It comprises nine representative scenarios—empty room, light/heavy object drops, normal and bent‐posture walking, wall‐supported walking, static standing, squatting, and intentional falls—each recorded for 20 minutes per scenario (3 hours total). mmWave radar data were sampled at 10 Hz (18 000 point clouds) and triaxial vibration at 100 Hz (over 120 000 samples), enabling robust fusion of macro‐motion and micro‐impact features. *This dataset will be released concurrently with the publication of this paper.*
+We have collected and constructed a large‐scale, multimodal fall‐detection dataset specifically for elderly users in bathroom environments. It comprises nine representative scenarios—empty room, light/heavy object drops, normal and bent‐posture walking, wall‐supported walking, static standing, squatting, and intentional falls—each recorded for 20 minutes per scenario (3 hours total). mmWave radar data were sampled at 10 Hz (18 000 point clouds) and triaxial vibration at 100 Hz (over 120 000 samples), enabling robust fusion of macro‐motion and micro‐impact features. **This dataset will be released concurrently with the publication of this paper.**
 
 ---
 
