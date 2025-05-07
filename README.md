@@ -44,7 +44,7 @@ A comprehensive sensor evaluation framework was developed to select the most sui
 
 The final selection was based on a weighted scoring system. As shown below, mmWave radar and 3D vibration sensors achieved the highest usability scores, demonstrating superior suitability for accurate and privacy-conscious monitoring.
 
-![Sensor Scoring Framework](./docs/Figures/Scoring Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
+![Sensor Scoring Framework](./docs/Figures/Scoring Framework for Privacy-Preserving Sensor Selection.png)
 
 ---
 
