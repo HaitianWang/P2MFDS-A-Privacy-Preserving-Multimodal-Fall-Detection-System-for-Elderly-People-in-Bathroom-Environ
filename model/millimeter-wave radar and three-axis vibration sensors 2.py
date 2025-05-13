@@ -79,12 +79,15 @@ class MultimodalDataset(Dataset):
         )
 
 class AttentionModule(nn.Module):
-    """Attention mechanism for temporal feature weighting.
-    
-    Args:
-        input_dim (int): Dimension of input features
     """
-    
+    Temporal Attention Mechanism
+
+    This module implements a simple soft attention mechanism over the temporal dimension.
+    It learns to assign varying importance to different time steps in a sequence.
+
+    Args:
+        input_dim (int): Dimensionality of the input feature vectors.
+    """
     def __init__(self, input_dim: int):
         super(AttentionModule, self).__init__()
         self.attention = nn.Sequential(
@@ -97,15 +100,48 @@ class AttentionModule(nn.Module):
         attn_weights = torch.softmax(self.attention(x), dim=1)
         return torch.sum(x * attn_weights, dim=1)
 
-class MultimodalCNNLSTM(nn.Module):
-    """Multimodal CNN-LSTM architecture with feature fusion.
-    
-    Args:
-        radar_input_dim (int): Dimension of radar input features
-        vibration_input_dim (int): Dimension of vibration input features
-        num_classes (int): Number of output classes
+class SEBlock1D(nn.Module):
     """
-    
+    Squeeze-and-Excitation Block (1D)
+
+    Implements channel-wise attention by adaptively recalibrating channel-wise feature responses.
+    This is especially useful after temporal feature extraction (e.g., LSTM outputs).
+
+    Args:
+        channels (int): Number of channels in the input tensor.
+        reduction (int): Reduction ratio for bottleneck transformation.
+    """
+    def __init__(self, channels: int, reduction: int = 16):
+        super(SEBlock1D, self).__init__()
+        self.global_pool = nn.AdaptiveAvgPool1d(1)
+        self.fc = nn.Sequential(
+            nn.Linear(channels, channels // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(channels // reduction, channels, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x_perm = x.permute(0, 2, 1)  # Rearrange to [B, C, T] for pooling
+        b, c, t = x_perm.size()
+        y = self.global_pool(x_perm).view(b, c)  # Global average pooling
+        y = self.fc(y).view(b, c, 1)  # Channel-wise scaling factors
+        scaled = x_perm * y  # Apply channel attention
+        return scaled.permute(0, 2, 1)  # Return to original shape [B, T, C]
+
+class MultimodalCNNLSTM(nn.Module):
+    """
+    Multimodal CNN-LSTM Network with SE and Attention Mechanisms
+
+    This network processes radar and vibration data using separate CNN-LSTM branches.
+    It integrates Squeeze-and-Excitation (SE) and temporal attention modules for enhanced
+    feature representation and classification performance in human activity recognition.
+
+    Args:
+        radar_input_dim (int): Number of input features for the radar modality.
+        vibration_input_dim (int): Number of input features for the vibration modality.
+        num_classes (int): Number of output classes (default: 1 for binary classification).
+    """
     def __init__(
         self,
         radar_input_dim: int = 3,
@@ -114,7 +150,7 @@ class MultimodalCNNLSTM(nn.Module):
     ):
         super(MultimodalCNNLSTM, self).__init__()
 
-        # Radar processing branch
+        # Radar modality processing
         self.radar_cnn = nn.Sequential(
             nn.Conv1d(radar_input_dim, 64, kernel_size=3, padding=1),
             nn.ReLU(),
@@ -126,7 +162,7 @@ class MultimodalCNNLSTM(nn.Module):
         self.radar_lstm = nn.LSTM(128, 64, batch_first=True, bidirectional=True)
         self.radar_attention = AttentionModule(64 * 2)
 
-        # Vibration processing branch
+        # Vibration modality processing
         self.vibration_cnn = nn.Sequential(
             nn.Conv1d(vibration_input_dim, 64, kernel_size=3, padding=1),
             nn.ReLU(),
@@ -136,6 +172,7 @@ class MultimodalCNNLSTM(nn.Module):
             nn.MaxPool1d(2),
         )
         self.vibration_lstm = nn.LSTM(128, 64, batch_first=True, bidirectional=True)
+        self.vibration_se = SEBlock1D(64 * 2)  # SE block after LSTM
         self.vibration_attention = AttentionModule(64 * 2)
 
         # Feature fusion and classification
@@ -147,22 +184,19 @@ class MultimodalCNNLSTM(nn.Module):
             nn.Sigmoid(),
         )
 
-    def forward(
-        self,
-        radar_input: torch.Tensor,
-        vibration_input: torch.Tensor,
-    ) -> torch.Tensor:
-        # Radar feature extraction
+    def forward(self, radar_input: torch.Tensor, vibration_input: torch.Tensor) -> torch.Tensor:
+        # Radar processing path
         radar_features = self.radar_cnn(radar_input.permute(0, 2, 1))
         radar_temporal, _ = self.radar_lstm(radar_features.permute(0, 2, 1))
         radar_attn = self.radar_attention(radar_temporal)
 
-        # Vibration feature extraction
+        # Vibration processing path with SE enhancement
         vibration_features = self.vibration_cnn(vibration_input.permute(0, 2, 1))
         vibration_temporal, _ = self.vibration_lstm(vibration_features.permute(0, 2, 1))
+        vibration_temporal = self.vibration_se(vibration_temporal)  # Apply SE block
         vibration_attn = self.vibration_attention(vibration_temporal)
 
-        # Feature fusion
+        # Multimodal feature fusion
         fused_features = torch.cat([radar_attn, vibration_attn], dim=1)
         return self.fusion_fc(fused_features)
 
