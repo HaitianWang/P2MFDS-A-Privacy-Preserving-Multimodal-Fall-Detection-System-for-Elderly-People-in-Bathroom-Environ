@@ -42,7 +42,7 @@ This architecture allows the model to learn both spatial and temporal patterns f
 
 Run the multimodal model:
 ```bash
-python millimeter-wave radar and three-axis vibration sensors 2.py
+python millimeter-wave radar and three-axis vibration sensors.py
 ```
 Run the radar-only models:
 ```bash
