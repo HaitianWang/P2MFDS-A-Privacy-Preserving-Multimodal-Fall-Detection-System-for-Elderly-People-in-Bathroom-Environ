@@ -24,7 +24,7 @@
 
 ## 1. Introduction
 
-Falls are among the leading causes of injury-related deaths in the elderly population. As global aging accelerates, with over 16% of people projected to be aged 65+ by 2050, the demand for reliable, real-time fall detection systems becomes increasingly critical—especially in wet and confined areas like bathrooms, where over 80% of falls occur.
+Falls are among the leading causes of injury-related deaths in the elderly population. As global aging accelerates, with over 16% of people projected to be aged 65+ by 2050, the demand for reliable, real-time fall detection systems becomes increasingly critical—especially in wet and confined spaces like bathrooms, where over 80% of falls occur.
 
 P2MFDS (Privacy-Preserving Multimodal Fall Detection) is a robust AI-based fall detection system that integrates mmWave radar and vibration sensors. The network not only delivers high accuracy but also preserves personal privacy by avoiding cameras or wearable sensors, making it ideal for private home environments.
 
@@ -36,13 +36,13 @@ P2MFDS (Privacy-Preserving Multimodal Fall Detection) is a robust AI-based fall 
 
 Traditional fall detection methods suffer from various limitations. Wearable devices often face poor user compliance and discomfort, especially in wet environments. Camera-based solutions raise significant privacy concerns, particularly in sensitive locations like bathrooms. Audio-based solutions are affected by environmental noise and false positives.
 
-To overcome these challenges, the research focuses on non-intrusive, privacy-aware modalities. However, unimodal systems (e.g., only radar or only vibration) are inherently limited by environmental conditions, leading to system bias and suboptimal performance. This motivated the need for a multimodal fusion system capable of capturing both motion dynamics and impact signals.
+To overcome these challenges, the research focuses on non-intrusive, privacy-aware modalities. However, unimodal systems based on single modality (e.g., radar or vibration only) are inherently limited by environmental conditions, leading to system bias and suboptimal performance. This motivated the need for a multimodal fusion system capable of capturing both motion dynamics and impact signals.
 
 ---
 
 ## 3. Multimodal Sensor Selection
 
-A comprehensive sensor evaluation framework was developed to select the most suitable combination for fall detection in bathroom settings. Fourteen common modalities—including Wi-Fi, infrared, thermal imaging, and vibration—were assessed based on eight criteria: target relevance, recall, energy efficiency, deployability, privacy, availability, and cost.
+A comprehensive sensor evaluation framework was developed to select the most suitable combination for fall detection in bathroom settings. 14 different common modalities including Wi-Fi, infrared, thermal imaging, and vibration were assessed based on 7 criteria: target relevance, recall, energy efficiency, deployability, privacy, availability, and cost.
 
 ![Sensor Scoring Framework](./docs/Figures/Scoring%20Framework%20for%20Privacy-Preserving%20Sensor%20Selection.png)
 
@@ -54,17 +54,17 @@ The final selection was based on a weighted scoring system. As shown below, mmWa
 
 ## 4. System Setup and Dataset Collection
 
-The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m × 2.2m), equipped with typical fixtures like marble walls, a glass partition, anti-slip tiles, and hygiene items. The mmWave radar was mounted at a height of 2.2 meters, while the ADXL345 vibration sensor was installed near the floor under the shower area.
+The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m × 2.2m), equipped with typical fixtures like tiled walls, a glass partition, anti-slip flooring, and hygiene items. The mmWave radar was mounted at a height of 2.2 meters, while the ADXL345 vibration sensor was installed on the shower floor.
 
 ![bathroom_floorplan](./docs/Figures/bathroom_floorplan.png)
 
 ![Setup Diagram](./docs/Figures/Exp_Setting.png)
 
-A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point clouds were collected, ensuring high-quality multimodal data.
+A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point cloud frames were collected, establishing a substantial multimodal dataset for analysis.
 
 ![Scenario Types](./docs/Figures/Exp_behavior.png)
 
-We have collected and constructed a large‐scale, multimodal fall‐detection dataset specifically for elderly users in bathroom environments. It comprises nine representative scenarios—empty room, light/heavy object drops, normal and bent‐posture walking, wall‐supported walking, static standing, squatting, and intentional falls—each recorded for 20 minutes per scenario (3 hours total). mmWave radar data were sampled at 10 Hz (18 000 point clouds) and triaxial vibration at 100 Hz (over 120 000 samples), enabling robust fusion of macro‐motion and micro‐impact features. **This dataset will be released concurrently with the publication of this paper.**
+We have collected and constructed a large‐scale, multimodal fall‐detection dataset specifically for elderly users in bathroom environments. It comprises 9 representative scenarios—empty room, light/heavy object drops, normal and bent-posture walking, wall-supported walking, static standing, squatting, and intentional falls—with each scenario recorded for 20 minutes (3 hours total). MmWave radar data were sampled at 10 Hz (18 000 point clouds frames collected) and triaxial vibration at 100 Hz (over 120 000 samples collected), enabling robust fusion of macro‐motion and micro‐impact features. **This dataset will be released concurrently with the publication of this paper.**
 
 ---
 
@@ -95,8 +95,8 @@ The output of the two streams is concatenated and passed through fully connected
 
 Eight real-world scenarios were designed to test system robustness:
 1. Empty bathroom
-2. Light object drop
-3. Heavy object drop
+2. Light object drop (0.7kg)
+3. Heavy object drop (2kg)
 4. Normal walking
 5. Bent posture walk
 6. Assisted walk (wall-supported)
