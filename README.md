@@ -1,4 +1,4 @@
-# PPMFD: A Privacy-Preserving Multimodal Fall Detection Network for Elderly Individuals in Bathroom
+# P2MFDS: A Privacy-Preserving Multimodal Fall Detection System for Elderly People in Bathroom Environments
 
 > **Notice:** Our manuscript is currently under peer review. In the meantime, we have released all data-processing pipelines, feature-extraction scripts, and the P2MFDS model code for early access and community feedback. We warmly invite reviewers and fellow researchers to explore the repository, experiment with the AI network, and share your insights or issues. The full multimodal fall-detection dataset will be made publicly available upon publication of the paper.
 
