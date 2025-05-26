@@ -1,6 +1,6 @@
-# PPMFD: A Privacy-Preserving Multimodal Fall Detection Network for Elderly Individuals in Bathroom
+# P2MFDS: A Privacy-Preserving Multimodal Fall Detection System for Elderly People in Bathroom Environments
 
-> **Notice:** Our manuscript is currently under peer review. In the meantime, we have released all data-processing pipelines, feature-extraction scripts, and the PPMFD model code for early access and community feedback. We warmly invite reviewers and fellow researchers to explore the repository, experiment with the AI network, and share your insights or issues. The full multimodal fall-detection dataset will be made publicly available upon publication of the paper.
+> **Notice:** Our manuscript is currently under peer review. In the meantime, we have released all data-processing pipelines, feature-extraction scripts, and the P2MFDS model code for early access and community feedback. We warmly invite reviewers and fellow researchers to explore the repository, experiment with the AI network, and share your insights or issues. The full multimodal fall-detection dataset will be made publicly available upon publication of the paper.
 
 
 ## Table of Contents
@@ -26,7 +26,7 @@
 
 Falls are among the leading causes of injury-related deaths in the elderly population. As global aging accelerates, with over 16% of people projected to be aged 65+ by 2050, the demand for reliable, real-time fall detection systems becomes increasingly critical—especially in wet and confined areas like bathrooms, where over 80% of falls occur.
 
-PPMFD (Privacy-Preserving Multimodal Fall Detection) is a robust AI-based fall detection system that integrates mmWave radar and vibration sensors. The network not only delivers high accuracy but also preserves personal privacy by avoiding cameras or wearable sensors, making it ideal for private home environments.
+P2MFDS (Privacy-Preserving Multimodal Fall Detection) is a robust AI-based fall detection system that integrates mmWave radar and vibration sensors. The network not only delivers high accuracy but also preserves personal privacy by avoiding cameras or wearable sensors, making it ideal for private home environments.
 
 ---
 
@@ -66,12 +66,12 @@ We have collected and constructed a large‐scale, multimodal fall‐detection d
 
 ## 5. Model Architecture
 
-PPMFD is a dual-stream multimodal neural network. It combines:
+P2MFDS is a dual-stream multimodal neural network. It combines:
 - A **CNN-BiLSTM-Attention** pipeline to analyze mmWave radar signals
 - A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
 - A fusion module that integrates both feature representations
 
-![PPMFD Architecture](./docs/Figures/PPMFD%20Network.png)
+![P2MFDS Architecture](./docs/Figures/P2MFDS%20Network.png)
 
 ### 5.1 Radar Stream
 
@@ -105,19 +105,19 @@ Each activity was performed for approximately 20 minutes. Fall scenarios were si
 
 ## 7. Results and Performance
 
-PPMFD achieved superior performance across all evaluation metrics.
+P2MFDS achieved superior performance across all evaluation metrics.
 
 ### 7.1 Scenario-wise Metrics
 
 The model maintained high precision and recall in all scenarios. Especially in hard cases like object drops and squatting, the dual-sensor fusion reduced false positives effectively.
 ![Confusion Matrix](./docs/Figures/confusion%20matrix.png)
 
-![Scenario Metrics](./docs/Figures/Scenario-Based%20PPMFD%20Performance%20Metrics.png)
+![Scenario Metrics](./docs/Figures/Scenario-Based%20P2MFDS%20Performance%20Metrics.png)
 
 
 ### 7.2 Comparison with State-of-the-Art
 
-PPMFD was benchmarked against 16 leading models. Despite similar or slightly lower recall, it outperformed in precision and overall F1-score—an essential trait for reducing false alarms in real environments.
+P2MFDS was benchmarked against 16 leading models. Despite similar or slightly lower recall, it outperformed in precision and overall F1-score—an essential trait for reducing false alarms in real environments.
 
 ![Benchmark Comparison](./docs/Figures/Benchmark%20Comparison%20of%20Fall%20Detection%20Methods.png)
 
@@ -131,7 +131,7 @@ To validate the effectiveness of each component, an ablation study was performed
 
 ## 8. Conclusion and Future Work
 
-PPMFD provides a privacy-aware, multimodal approach to real-time fall detection in bathrooms. Its dual-stream architecture captures both large-scale movement and localized impacts, ensuring high accuracy in complex, noisy environments.
+P2MFDS provides a privacy-aware, multimodal approach to real-time fall detection in bathrooms. Its dual-stream architecture captures both large-scale movement and localized impacts, ensuring high accuracy in complex, noisy environments.
 
 In the future, we aim to:
 - Expand testing to real elderly subjects under long-term deployment
@@ -145,10 +145,11 @@ The dataset and model will be released to promote open research and reproducibil
 This work was conducted by a research team from the University of Western Australia (UWA).
 
 ### Lead Contributors
-- **Haitian Wang** – Lead researcher and project coordinator. Designed the sensor selection framework and supervised overall system integration.
-- **Yiren Wang** – Developed the multimodal dataset, led the implementation of the CNN-BiLSTM-Attention pipeline, and conducted extensive experimentation and evaluation.
+- **Haitian Wang** – Lead researcher and project coordinator. Designed the sensor selection framework and develop overall system and its integration. Conducted extensive human experimentation, collect the raw data and developed the multimodal dataset.
+- **Yiren Wang** – Design and led the implementation of the CNN-BiLSTM-Attention pipeline. Conducted the model training and testing. Finalize the evaluation and result visualization.
+- **Xinyu Wang** - Assist in completing system and experiments. Participate in the hardware deployment and neural network design work. Assist in Paper writing and submittion.
 
 ---
 
 > Contact: haitian.wang@uwa.edu.au  
-> Project by: University of Western Australia, Department of Computer Science
+> Project by: Department of Computer Science and Software Engineering, University of Western Australia, Australia.
