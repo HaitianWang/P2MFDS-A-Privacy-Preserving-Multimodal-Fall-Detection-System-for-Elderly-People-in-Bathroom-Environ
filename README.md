@@ -152,4 +152,4 @@ This work was conducted by a research team from the University of Western Austra
 ---
 
 > Contact: haitian.wang@uwa.edu.au  
-> Project by: University of Western Australia, Department of Computer Science
+> Project by: Department of Computer Science and Software Engineering, University of Western Australia, Australia.
