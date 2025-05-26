@@ -145,7 +145,7 @@ The dataset and model will be released to promote open research and reproducibil
 This work was conducted by a research team from the University of Western Australia (UWA).
 
 ### Lead Contributors
-- **Haitian Wang** – Lead researcher and project coordinator. Designed the sensor selection framework and supervised overall system integration. conducted extensive experimentation and evaluation.
+- **Haitian Wang** – Lead researcher and project coordinator. Designed the sensor selection framework and supervised overall system integration. Conducted extensive experimentation and evaluation.
 - **Yiren Wang** – Developed the multimodal dataset, led the implementation of the CNN-BiLSTM-Attention pipeline.
 
 ---
