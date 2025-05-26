@@ -77,15 +77,13 @@ P2MFDS is a dual-stream multimodal neural network. It combines:
 
 ![P2MFDS Network](./docs/Figures/P2MFDS_Network.png)
 
-![SEBlock architecture](./docs/Figures/SEBlock.png)
+### 5.1 Vibration Stream
+Vibration data is fed into a Multi-Scale CNN, allowing detection of subtle and high-impact signals. Channel-wise attention (SEBlock) emphasizes dominant signals, and a self-attention mechanism captures temporal dependencies, reducing noise.
 
-### 5.1 Radar Stream
-
+### 5.2 Radar Stream
 The mmWave radar signal is transformed into a temporal sequence of point clouds. These are processed via a 1D CNN to extract local motion features, followed by a BiLSTM layer that models long-range dependencies. Attention weights further enhance informative temporal segments.
 
-### 5.2 Vibration Stream
-
-Vibration data is fed into a Multi-Scale CNN, allowing detection of subtle and high-impact signals. Channel-wise attention (SEBlock) emphasizes dominant signals, and a self-attention mechanism captures temporal dependencies, reducing noise.
+![SEBlock architecture](./docs/Figures/SEBlock.png)
 
 ### 5.3 Feature Fusion and Classifier
 
