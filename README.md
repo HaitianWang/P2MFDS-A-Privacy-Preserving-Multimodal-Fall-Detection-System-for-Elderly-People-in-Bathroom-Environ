@@ -70,12 +70,12 @@ We have collected and constructed a large‐scale, multimodal fall‐detection d
 
 ## 5. Model Architecture
 
+![P2MFDS Network](./docs/Figures/P2MFDS_Network.png)
+
 P2MFDS is a dual-stream multimodal neural network. It combines:
 - A **CNN-BiLSTM-Attention** pipeline to analyze mmWave radar signals
 - A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
 - A fusion module that integrates both feature representations
-
-![P2MFDS Network](./docs/Figures/P2MFDS_Network.png)
 
 ### 5.1 Vibration Stream
 Vibration data is fed into a Multi-Scale CNN, allowing detection of subtle and high-impact signals. Channel-wise attention (SEBlock) emphasizes dominant signals, and a self-attention mechanism captures temporal dependencies, reducing noise.
