@@ -28,6 +28,8 @@ Falls are among the leading causes of injury-related deaths in the elderly popul
 
 P2MFDS (Privacy-Preserving Multimodal Fall Detection) is a robust AI-based fall detection system that integrates mmWave radar and vibration sensors. The network not only delivers high accuracy but also preserves personal privacy by avoiding cameras or wearable sensors, making it ideal for private home environments.
 
+![Overview Diagram](./docs/Figures/Overview_Diagram.png)
+
 ---
 
 ## 2. Motivation and Background
@@ -54,6 +56,8 @@ The final selection was based on a weighted scoring system. As shown below, mmWa
 
 The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m × 2.2m), equipped with typical fixtures like marble walls, a glass partition, anti-slip tiles, and hygiene items. The mmWave radar was mounted at a height of 2.2 meters, while the ADXL345 vibration sensor was installed near the floor under the shower area.
 
+![bathroom_floorplan](./docs/Figures/bathroom_floorplan.png)
+
 ![Setup Diagram](./docs/Figures/Exp_Setting.png)
 
 A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point clouds were collected, ensuring high-quality multimodal data.
@@ -71,7 +75,9 @@ P2MFDS is a dual-stream multimodal neural network. It combines:
 - A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
 - A fusion module that integrates both feature representations
 
-![P2MFDS Architecture](./docs/Figures/P2MFDS_Network.png)
+![P2MFDS Network](./docs/Figures/P2MFDS_Network.png)
+
+![SEBlock architecture](./docs/Figures/SEBlock.png)
 
 ### 5.1 Radar Stream
 
