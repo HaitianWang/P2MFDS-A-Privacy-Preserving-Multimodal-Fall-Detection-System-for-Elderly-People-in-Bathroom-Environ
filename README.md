@@ -71,7 +71,7 @@ P2MFDS is a dual-stream multimodal neural network. It combines:
 - A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
 - A fusion module that integrates both feature representations
 
-![P2MFDS Architecture](./docs/Figures/P2MFDS%20Network.png)
+![P2MFDS Architecture](./docs/Figures/P2MFDS_Network.png)
 
 ### 5.1 Radar Stream
 
