@@ -62,36 +62,11 @@ The experiment was conducted in a replicated bathroom environment (2.5m × 1.1m 
 
 A total of 48 volunteers participated in data collection, simulating 8 types of daily bathroom activities, including both falls and non-fall movements (e.g., walking, squatting, object drops). Over 120,000 vibration samples and 18,000 mmWave point cloud frames were collected, establishing a substantial multimodal dataset for analysis.
 
-![Scenario Types](./docs/Figures/Exp_behavior.png)
-
 We have collected and constructed a large‐scale, multimodal fall‐detection dataset specifically for elderly users in bathroom environments. It comprises 9 representative scenarios—empty room, light/heavy object drops, normal and bent-posture walking, wall-supported walking, static standing, squatting, and intentional falls—with each scenario recorded for 20 minutes (3 hours total). MmWave radar data were sampled at 10 Hz (18 000 point clouds frames collected) and triaxial vibration at 100 Hz (over 120 000 samples collected), enabling robust fusion of macro‐motion and micro‐impact features. **This dataset will be released concurrently with the publication of this paper.**
 
 ---
 
-## 5. Model Architecture
-
-![P2MFDS Network](./docs/Figures/P2MFDS_Network.png)
-
-P2MFDS is a dual-stream multimodal neural network. It combines:
-- A **CNN-BiLSTM-Attention** pipeline to analyze mmWave radar signals
-- A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
-- A fusion module that integrates both feature representations
-
-### 5.1 Vibration Stream
-Vibration data is fed into a Multi-Scale CNN, allowing detection of subtle and high-impact signals. Channel-wise attention (SEBlock) emphasizes dominant signals, and a self-attention mechanism captures temporal dependencies, reducing noise.
-
-### 5.2 Radar Stream
-The mmWave radar signal is transformed into a temporal sequence of point clouds. These are processed via a 1D CNN to extract local motion features, followed by a BiLSTM layer that models long-range dependencies. Attention weights further enhance informative temporal segments.
-
-![SEBlock architecture](./docs/Figures/SEBlock.png)
-
-### 5.3 Feature Fusion and Classifier
-
-The output of the two streams is concatenated and passed through fully connected layers for final binary classification (fall vs. non-fall). This architecture enables the model to learn both macro-motion and micro-impact patterns.
-
----
-
-## 6. Experimental Design
+## 5. Experimental Design
 
 Eight real-world scenarios were designed to test system robustness:
 1. Empty bathroom
@@ -104,6 +79,31 @@ Eight real-world scenarios were designed to test system robustness:
 8. Realistic fall
 
 Each activity was performed for approximately 20 minutes. Fall scenarios were simulated under expert supervision. The synchronized multimodal dataset offers a valuable benchmark for future research.
+
+![Scenario Types](./docs/Figures/Exp_behavior.png)
+
+---
+
+## 6. Model Architecture
+
+![P2MFDS Network](./docs/Figures/P2MFDS_Network.png)
+
+P2MFDS is a dual-stream multimodal neural network. It combines:
+- A **CNN-BiLSTM-Attention** pipeline to analyze mmWave radar signals
+- A **Multi-Scale CNN + SEBlock + Self-Attention** pipeline for vibration data
+- A fusion module that integrates both feature representations
+
+### 6.1 Vibration Stream
+Vibration data is fed into a Multi-Scale CNN, allowing detection of subtle and high-impact signals. Channel-wise attention (SEBlock) emphasizes dominant signals, and a self-attention mechanism captures temporal dependencies, reducing noise.
+
+### 6.2 Radar Stream
+The mmWave radar signal is transformed into a temporal sequence of point clouds. These are processed via a 1D CNN to extract local motion features, followed by a BiLSTM layer that models long-range dependencies. Attention weights further enhance informative temporal segments.
+
+![SEBlock architecture](./docs/Figures/SEBlock.png)
+
+### 6.3 Feature Fusion and Classifier
+
+The output of the two streams is concatenated and passed through fully connected layers for final binary classification (fall vs. non-fall). This architecture enables the model to learn both macro-motion and micro-impact patterns.
 
 ---
 
